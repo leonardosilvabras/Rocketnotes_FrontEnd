@@ -14,7 +14,7 @@ export default createGlobalStyle`
   body {
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
     color: ${({ theme }) => theme.COLORS.WHITE};
-    font-size: 12.5rem;
+    font-size: 1.6rem;
 
     --webkit-font-smoothing: antialiased;
   }
