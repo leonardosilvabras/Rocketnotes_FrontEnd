@@ -48,11 +48,30 @@ export const Menu = styled.ul`
 
 export const Search = styled.div`
   grid-area: search;
+
+  padding: 6.4rem 6.4rem 0;
 `;
 
 export const Content = styled.div`
   grid-area: content;
+  padding: 0 6.4rem;
+  overflow-y: auto;
 `;
+
 export const NewNote = styled.div`
   grid-area: newnote;
+
+  background-color: ${({ theme }) => theme.COLORS.ORANGE};
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.6rem;
+  color: ${({ theme }) => theme.COLORS.BACKGROUND_900};;
+
+  > svg {
+    margin-right: .8rem;
+  }
 `;
