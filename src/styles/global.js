@@ -19,6 +19,11 @@ export default createGlobalStyle`
     --webkit-font-smoothing: antialiased;
   }
 
+  body, input, button, textarea {
+    font-size: 1.6rem;
+    outline: none;
+  }
+
   a {
     text-decoration: none;
   }
@@ -27,7 +32,7 @@ export default createGlobalStyle`
     cursor: pointer;
     transition: filter .2s;
     font-size: 1.6rem;
-    outline: none;
+    border: none;
   }
 
   button:hover, a:hover {
