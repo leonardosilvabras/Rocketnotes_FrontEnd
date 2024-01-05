@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import backgroundImg from "../../assets/background.png";
 
 export const Container = styled.div`
   height: 100vh;
 
   display: flex;
   align-items: stretch;
-`
+`;
 
 export const Form = styled.form`
   padding: 0 13.6rem;
@@ -35,4 +36,12 @@ export const Form = styled.form`
   > button:last-child {
     margin-top: 12.4rem;
   }
-`
+`;
+
+export const Background = styled.div`
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: url(${backgroundImg}) no-repeat center center;
+  background-size: cover;
+`;
