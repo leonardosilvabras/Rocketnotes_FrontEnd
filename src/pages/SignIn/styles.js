@@ -32,7 +32,7 @@ export const Form = styled.form`
     color: ${({ theme }) => theme.COLORS.GRAY_100};
   }
 
-  > button:last-child {
+  > a {
     margin-top: 12.4rem;
   }
 `;
@@ -42,6 +42,6 @@ export const Background = styled.div`
   height: 100%;
   flex: 1;
   background: url(${backgroundImg}) no-repeat center center;
-  filter: brightness(.4);
+  filter: brightness(0.4);
   background-size: cover;
 `;

@@ -7,6 +7,7 @@ import { ButtonText } from "../../components/ButtonText";
 import { Button } from "../../components/Button";
 
 import { Container, Form } from "./styles";
+import { Link } from "react-router-dom";
 
 export function New() {
   return (
@@ -17,7 +18,9 @@ export function New() {
         <Form>
           <header>
             <h1>Criar nota</h1>
-            <ButtonText title="Voltar" />
+            <Link to="/">
+              <ButtonText title="Voltar" />
+            </Link>
           </header>
 
           <Input placeholder="Título" />

@@ -32,7 +32,7 @@ export const Form = styled.form`
     color: ${({ theme }) => theme.COLORS.GRAY_100};
   }
 
-  > button:last-child {
+  > a {
     margin-top: 12.4rem;
   }
 `;
