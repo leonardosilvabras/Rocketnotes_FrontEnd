@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Textarea } from "../../components/Textarea";
@@ -8,15 +10,22 @@ import { Section } from "../../components/Section";
 import { ButtonText } from "../../components/ButtonText";
 import { Button } from "../../components/Button";
 
+import { api } from "../../services/api";
+
 import { Container, Form } from "./styles";
 import { Link } from "react-router-dom";
 
 export function New() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const [links, setLinks] = useState([]);
   const [newLink, setNewLink] = useState("");
 
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
+
+  const navigate = useNavigate();
 
   function handleAddLink() {
     setLinks((prevState) => [...prevState, newLink]);
@@ -33,7 +42,27 @@ export function New() {
   }
 
   function handleRemoveTag(deleted) {
-    setTags((prevState) => prevState.filter((tag => tag !== deleted)));
+    setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+  }
+
+  async function handleNewNote() {
+    if (!title) return alert("Digite o titulo da nota!");
+    if (newLink && newTag)
+      return alert("Voce preencheu um link e uma tag, porem nao os adicionou!");
+    else if (newLink)
+      return alert("Voce preencheu um link, porem nao o adicionou!");
+    else if (newTag)
+      return alert("Voce preencheu uma tag, porem nao a adicionou!");
+
+    await api.post("/notes", {
+      title,
+      description,
+      links,
+      tags,
+    });
+
+    alert("Nota enviada com sucesso!");
+    navigate("/");
   }
 
   return (
@@ -49,8 +78,14 @@ export function New() {
             </Link>
           </header>
 
-          <Input placeholder="Título" />
-          <Textarea placeholder="Observações" />
+          <Input
+            placeholder="Título"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            placeholder="Observações"
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
           <Section title="Links úteis">
             {links.map((link, index) => (
@@ -88,7 +123,7 @@ export function New() {
             </div>
           </Section>
 
-          <Button title="Salvar" />
+          <Button title="Salvar" onClick={handleNewNote} />
         </Form>
       </main>
     </Container>
