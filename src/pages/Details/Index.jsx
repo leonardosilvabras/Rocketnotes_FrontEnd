@@ -1,56 +1,72 @@
 import { Container, Links, Content } from "./styles.js";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import { Header } from "../../components/Header/index.jsx";
 import { Button } from "../../components/Button/index.jsx";
 import { Section } from "../../components/Section/index.jsx";
 import { Tag } from "../../components/Tag/index.jsx";
 import { ButtonText } from "../../components/ButtonText/index.jsx";
+import { api } from "../../services/api.js";
 
 export function Details() {
+  const [data, setData] = useState(null);
+
+  const params = useParams();
+
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate("/");
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchNote();
+  }, []);
+
   return (
     <Container>
       <Header />
 
-      <main>
-        <Content>
-          <ButtonText title="Excluir a nota" />
+      {data && (
+        <main>
+          <Content>
+            <ButtonText title="Excluir a nota" />
 
-          <h1>Introdução ao React</h1>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
 
-          <Section title="Links úteis">
-            <Links>
-              <li>
-                <a href="https://www.rocketseat.com.br/">
-                  https://www.rocketseat.com.br/
-                </a>
-              </li>
-              <li>
-                <a href="https://www.rocketseat.com.br/">
-                  https://www.rocketseat.com.br/
-                </a>
-              </li>
-            </Links>
-          </Section>
+            {data.links && (
+              <Section title="Links úteis">
+                <Links>
+                  {data.links.map((link) => (
+                    <li key={String(link.id)}>
+                      <a href={link.url} target="_blank">
+                        {link.url}
+                      </a>
+                    </li>
+                  ))}
+                </Links>
+              </Section>
+            )}
 
-          <Section title="Marcadores">
-            <Tag title="express" />
-            <Tag title="node" />
-          </Section>
+            {data.tags && (
+              <Section title="Marcadores">
+                {data.tags.map((tag) => (
+                  <Tag key={String(tag.id)} title={tag.name} />
+                ))}
+              </Section>
+            )}
 
-          <Button title="Voltar" />
-        </Content>
-      </main>
+            <Button title="Voltar" onClick={handleBack} />
+          </Content>
+        </main>
+      )}
     </Container>
   );
 }
